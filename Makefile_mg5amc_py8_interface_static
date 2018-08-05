@@ -1,0 +1,12 @@
+# Include the Pythia8 environmental information
+-include Makefile.inc
+-include Makefile
+
+MG5aMC_PY8_interface: MG5aMC_PY8_interface.cc\
+	$(PREFIX_LIB)/libpythia8.a
+ifeq ($(HEPMC2_USE),true)
+	$(CXX) $^ -o $@ -I$(HEPMC2_INCLUDE)\
+	 $(CUSTOM_STATIC_HEPMC2_LIB)/libHepMC.a $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
+else
+	@echo "Error: $@ requires HEPMC2"
+endif
